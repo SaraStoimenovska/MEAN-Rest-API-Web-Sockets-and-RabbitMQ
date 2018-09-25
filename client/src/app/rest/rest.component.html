@@ -1,0 +1,49 @@
+<div class="container">
+    <h3>Example with REST services</h3>
+    <div heading="Get all users" class="group first">
+        <li *ngFor="let user of users" class="one-group" [class.selected]="user === selectedUser" (click)="selectUser(user)">
+          <h5>
+            <b>User: </b>{{user.name}}</h5>
+        </li>
+        <div *ngIf="selectedUser" class="user-details">
+          <h2>{{selectedUser.name | uppercase}} Details</h2>
+          <div class="form-group">
+            <label>Name:</label>
+            <input type="text" class="form-control" value="{{ selectedUser.name }}" #name>
+          </div>
+          <div class="form-group">
+            <label>Password:</label>
+            <input type="text" class="form-control" value="{{ selectedUser.password }}" #password>
+          </div>
+          <div class="form-group">
+            <label>Profession:</label>
+            <input type="text" class="form-control" value="{{ selectedUser.profession }}" #profession>
+          </div>
+          <button class="btn btn-primary pull-right" (click)="updateUser(selectedUser)">Update</button>
+          <button class="btn btn-primary pull-right" (click)="deleteUser(selectedUser)">Delete</button>
+          <br/>
+        </div>
+      </div>
+
+
+
+    <div heading="Add a user" class="group one-group second">
+      <h2>Enter the following information:</h2>
+      <form class="input-form" (submit)="createUser()">
+        <div class="form-group">
+          <label>Name:</label>
+          <input type="text" class="form-control" name="name" placeholder="Name"  [(ngModel)]="newUser.name">
+        </div>
+        <div class="form-group">
+          <label>Password:</label>
+          <input type="text" class="form-control" name="password" placeholder="Password" [(ngModel)]="newUser.password">
+        </div>
+        <div class="form-group">
+          <label>Profession:</label>
+          <input type="text" class="form-control" name="profession" placeholder="Profession" [(ngModel)]="newUser.profession">
+        </div>
+        <button type="submit" class="btn btn-primary pull-right">Create new user</button>
+      </form>
+    </div>
+</div>
+

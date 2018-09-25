@@ -1,0 +1,24 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "Simple mean app with rest services, web sockets and message queues",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sara.stoimenovska",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/cli": "^6.1.4",
+    "@stomp/ng2-stompjs": "^6.0.1",
+    "@stomp/stompjs": "^4.0.8",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.9",
+    "nodemon": "^1.18.3",
+    "stompjs": "^2.3.3",
+    "websocket": "^1.0.26"
+  }
+}

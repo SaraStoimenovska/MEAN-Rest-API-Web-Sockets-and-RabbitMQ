@@ -1,0 +1,19 @@
+<div class="container">
+    <h3>Example with StompMQ</h3>
+    <br/>
+
+    <h4>Send test message with three randomly generated numbers</h4>
+    <button class="btn btn-primary" (click)="onSendMessage()">Send Test Message</button>
+
+    <br/>
+    <h5>total number of send messages: {{count}}</h5>
+
+    <h3 *ngIf="count">Latest:</h3>
+    <pre>{{messages | async}}</pre>
+
+    <h3 *ngIf="mq.length">History:</h3>
+    <ol>
+      <li *ngFor="let m of mq">{{m}}</li>
+    </ol>
+  </div>
+

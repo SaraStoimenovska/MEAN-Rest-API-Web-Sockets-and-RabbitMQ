@@ -1,0 +1,38 @@
+.container {
+  width: 90%;
+  margin: auto;
+  margin-top: 10px;
+}
+.one-group {
+  background-color: #eff4f5;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  list-style: none;
+}
+.group {
+  width: 48%;
+}
+.group.first {
+  float: left;
+}
+.group.second {
+  float: right;
+}
+p label {
+  width: 90px;
+}
+li:hover {
+  cursor: pointer;
+  background-color: white;
+}
+.selected {
+  background-color: #337ab7 !important;
+  color: white;
+}
+.user-details {
+  background-color: #eff4f5;
+  padding: 5px 10px 25px 5px;
+}
+.btn.btn-primary {
+  margin-left: 5px;
+}

@@ -1,0 +1,20 @@
+.container-fluid {
+  background: linear-gradient(white, #eff4f5);
+  border-bottom: 3px solid #e5edee;
+}
+
+ul li {
+  list-style: none;
+  display: inline;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: #eff4f5;
+}
+
+.navbar-nav a {
+  color: #1b5581 !important;
+  font-size: large;
+  text-decoration: none;
+}
