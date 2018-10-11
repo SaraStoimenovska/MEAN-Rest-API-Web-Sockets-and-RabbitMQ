@@ -1,9 +1,9 @@
 <div class="container">
-  <h3>Example with web sockets</h3>
+  <h3>Chat example with web sockets</h3>
   <br/>
-  <p>Enter some text here:</p>
+  <p id="lbl">Enter your username here:</p>
   <input id="text" type="text" #input (keydown)='enter($event)'/>
-
-  <p #lbl></p>
+  <br/><br/>
+  <div #content id='content'></div>
 </div>
 

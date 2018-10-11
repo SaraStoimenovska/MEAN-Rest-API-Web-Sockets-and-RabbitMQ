@@ -95,6 +95,7 @@ router.route('/users/:user_id')
         })
     })
 
+
 // for web sockets
 var server = app.listen(3000, () => {
     console.log("Server running on port 3000");
@@ -104,7 +105,9 @@ wsServer = new WebSocketServer({
     httpServer: server,
     autoAcceptConnections: false
 });
-
+var history = [];
+var clients = [];
+var colors = ['maroon', 'olive', 'teal', 'magenta', 'purple', 'DodgerBlue', 'orange' ];
 function originIsAllowed(origin) {
     return true;
 }
@@ -115,23 +118,50 @@ wsServer.on('request', function (request) {
         console.log('Connection from origin ' + request.origin + ' rejected.');
         return;
     }
-
     var connection = request.accept(null, request.origin);
 
-    console.log('Connection accepted.');
+    // index of the client - used for removind client from array when disconnect
+    var index = clients.push(connection) - 1;
+    var username = false;
+    var userColor = false;
+
+    console.log((new Date()) + ' Connection accepted.');
+
+    // to send back all chat history
+    if (history.length > 0) {
+        connection.sendUTF(JSON.stringify({ type: 'history', data: history} ));
+    }
 
     connection.on('message', function (message) {
         if (message.type === 'utf8') {
-            console.log('Received Message: ' + message.utf8Data);
-            connection.sendUTF(message.utf8Data);
-        } else if (message.type === 'binary') {
-            console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-            connection.sendBytes(message.binaryData);
+            if (username === false) { // first msg is username 
+                username = message.utf8Data;
+                userColor = colors.shift();
+                console.log('Username is: ' + username + " with color: " + userColor);
+            } else { // to keep msg history
+                var obj = {
+                    author: username,
+                    text: message.utf8Data,
+                    time: (new Date()).getTime(),
+                    color: userColor
+                };
+                history.push(obj);
+                console.log(obj);
+
+                var json = JSON.stringify({ type:'message', data: obj });
+                for (var i=0; i < clients.length; i++) {
+                    clients[i].sendUTF(json);
+                }
+            }
         }
     });
 
     connection.on('close', function (connection) {
-        console.log(' Peer disconnected.');
+        if (username !== false) {
+            console.log(' Peer disconnected.');
+            clients.splice(index, 1);
+            colors.push(userColor);
+        }
     });
 });
 
@@ -145,10 +175,6 @@ client.connect('guest', 'guest', function (frame) {
 
     client.subscribe('/topic/stomp', function (message) {
         console.log("received message " + message.body);
-
-        client.disconnect(function () {
-            console.log("See you next time!");
-        });
     });
 
     client.send('/topic/stomp', {}, 'Hello, node.js!');
